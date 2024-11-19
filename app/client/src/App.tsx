@@ -4,6 +4,8 @@ import Landing from './pages/Landing'
 import Home from './pages/Home'
 import NavBar from './components/navbar/NavBar'
 import SideBar from './components/sideBar/SideBar'
+import Tasks from './pages/Tasks'
+
 
 function App() {
 
@@ -17,6 +19,7 @@ function App() {
 
           <Route path='/' element={<Landing/>}></Route>
           <Route path='/home' element={<Home/>}></Route>
+          <Route path='/tasks' element={<Tasks/>}></Route>
 
         </Routes>
       </div>
