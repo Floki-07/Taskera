@@ -7,7 +7,6 @@ import SignUp from './pages/SignUp'
 import SideBar from './components/sideBar/SideBar'
 import Tasks from './pages/Tasks'
 
-
 function App() {
 
   return (
@@ -23,6 +22,7 @@ function App() {
           <Route path='/tasks' element={<Tasks/>}></Route>
           <Route path='/signUp' element={<SignUp/>}></Route>
 
+          <Route path='/tasks' element={<Tasks/>}></Route>
 
         </Routes>
       </div>
