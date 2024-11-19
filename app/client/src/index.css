@@ -1,3 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Manrope:wght@200..800&family=Rajdhani:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+:root{
+    --primary: #F8F9FB ;
+    --secondary: #B8B8FF ;
+    --ternary: #1A1B27 ;
+    --background-2: #2B2D42 ;
+    --bricolage: Bricolage Grotesque;
+    --red-flag: #FF7675 ;
+    --green-flag: #A5DD9B ;
+}
+
+*{
+    margin: 0px;
+}
+
+html,body{
+    font-family: Manrope;
+}
+
+h1, h2, h3, h4, h5, h6{
+    font-family: var(--bricolage);
+}

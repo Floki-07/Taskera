@@ -1,7 +1,7 @@
 
 function Landing() {
   return (
-    <div className="text-green-600">Landing</div>
+    <h1 className="text-green-600 text-xl">Landing</h1>
   )
 }
 
