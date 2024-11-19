@@ -1,7 +1,7 @@
 
 function NavBar() {
   return (
-    <div>NavBar</div>
+    <div className="h-[60px]">NavBar</div>
   )
 }
 
