@@ -14,6 +14,7 @@
     --bricolage: Bricolage Grotesque;
     --red-flag: #FF7675 ;
     --green-flag: #A5DD9B ;
+    --border-line: rgba(255, 255, 255, 0.2);
 }
 
 *{
