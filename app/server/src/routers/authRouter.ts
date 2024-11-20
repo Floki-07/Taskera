@@ -128,21 +128,6 @@ router.post(
         return;
       }
 
-      const prisma = getPrisma();
-
-      const exists = await prisma.user.findFirst({
-        where: {
-          email: email
-        }
-      })
-
-      if(exists){
-        res.status(401).json({
-          error: "Email already exists",
-        })
-        return;
-      }
-
       await sendVerificationCode(email);
       res.json({ message: "Verification code sent" });
     } catch (error) {
@@ -151,6 +136,22 @@ router.post(
     }
   }
 );
+router.post('/validate',authMiddleware,(req:any,res:any)=>{
+  try{
+    const email = req.user?.email;
+    if(!email){
+      console.log("Unauthorized: ",email);
+      return res.status(401).json({message:"Unauthorized"});
+    }
+    return res.status(200).json({
+      ok:true,
+      message:"Authorized"
+    });
+  }catch(e){
+    console.log("Error during verifying user:",e);
+    return res.status(500).json({message:"Internal Server Error"});
+  }
+  })
 
 router.post(
   "/verify",
@@ -172,11 +173,13 @@ router.post(
 
       const prisma = await getPrisma();
 
-      prisma.user.create({
-        data:{
+      await prisma.user.upsert({
+        where: { email: email },
+        update: {},
+        create: {
           email: email,
-        }
-      })
+        },
+      });
 
       const token = jwt.sign({ email }, process.env.JWT_SECRET as string, {
         expiresIn: "24h",

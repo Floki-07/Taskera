@@ -1,5 +1,4 @@
 import { CalendarClock, ChartNoAxesCombined, Home, LayoutList, UsersRound } from "lucide-react"
-import { useEffect, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 
 const sideBarItems = [{
@@ -32,7 +31,7 @@ const sideBarItems = [{
 
 function SideBar({isLanding} : any) {
 
-
+    const location = useLocation();
     const list = sideBarItems.map((item : any,i : any) => (
         <Link to={item.url} key={i} className={`${location.pathname === '/'+item.name ? 'text-[--secondary]' : ''}`}>{item.icon}</Link>
     ))
