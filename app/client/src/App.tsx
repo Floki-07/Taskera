@@ -7,6 +7,7 @@ import SignUp from './pages/SignUp'
 import SideBar from './components/sideBar/SideBar'
 import Tasks from './pages/Tasks'
 import Error from './pages/Error'
+import OTPpage from './pages/OTPpage'
 
 function App() {
 
@@ -23,7 +24,7 @@ function App() {
           <Route path='/tasks' element={<Tasks/>}></Route>
           <Route path='/signUp' element={<SignUp/>}></Route>
           <Route path='/error' element={<Error/>}></Route>
-
+          <Route path='/otpPage' element={<OTPpage/>}></Route>
           <Route path='/tasks' element={<Tasks/>}></Route>
 
         </Routes>
