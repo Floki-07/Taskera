@@ -6,6 +6,8 @@ import { authRouter } from './routers/authRouter';
 import passport from 'passport';
 import { getPrisma } from './utils/getPrisma';
 import './middlewares/oauthMiddleware'
+import { taskRouter } from './routers/taskRouter';
+import { calendarRouter } from './routers/calendarRouter';
 const app = express();
 const port = 3000;
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -19,6 +21,8 @@ app.use(session({
 }));
 
 app.use('/api/v1/auth',authRouter);
+app.use('/api/v1/tasks',taskRouter);
+app.use('/api/v1/calendar',calendarRouter);
 
 app.get('/',(req,res)=>{
     res.send("API Setup")
