@@ -1,7 +1,8 @@
+import { Link } from "react-router-dom"
 
 function Landing() {
   return (
-    <h1 className="text-green-600 text-xl">Landing</h1>
+    <Link to='/signup'>Get Started</Link>
   )
 }
 

@@ -1,6 +1,6 @@
 import { CalendarClock, ChartNoAxesCombined, Home, LayoutList, UsersRound } from "lucide-react"
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { Link, useLocation } from "react-router-dom"
 
 const sideBarItems = [{
     name:'home',
@@ -30,21 +30,22 @@ const sideBarItems = [{
     url:'/groups'
 },]
 
-function SideBar() {
+function SideBar({isLanding} : any) {
 
-    const [isActive, setIsActive] = useState<string>('home');
 
     const list = sideBarItems.map((item : any,i : any) => (
-        <Link to={item.url} onClick={()=>{setIsActive(item.name)}} key={i} className={`${isActive === item.name ? 'text-[--secondary]' : ''}`}>{item.icon}</Link>
+        <Link to={item.url} key={i} className={`${location.pathname === '/'+item.name ? 'text-[--secondary]' : ''}`}>{item.icon}</Link>
     ))
 
   return (
-    <div className="w-[60px] border-r border-[--border-line] h-full flex flex-col items-center py-10 justify-between">
+     <>
+        {!isLanding && <div className="w-[60px] border-r border-[--border-line] h-full flex flex-col items-center py-10 justify-between">
         <div className="flex flex-col gap-5 ">
             {list}
         </div>
         A
-    </div>
+    </div>}
+     </>
   )
 }
 
