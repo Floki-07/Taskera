@@ -20,10 +20,8 @@ interface AuthRequest extends Request {
 
 const router = Router();
 
-// In-memory store for verification codes
 const verificationCodes: Map<string, VerificationData> = new Map();
 
-// Email configuration
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -32,10 +30,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// JWT middleware
-
-
-// Generate and send verification code
 const sendVerificationCode = async (email: string): Promise<string> => {
   const code = crypto.randomInt(100000, 999999).toString();
   const expiryTime = Date.now() + 10 * 60 * 1000; // 10 minutes
@@ -60,7 +54,6 @@ const sendVerificationCode = async (email: string): Promise<string> => {
   return code;
 };
 
-// Routes
 router.post(
   "/email",
   async (req: Request, res: Response): Promise<void> => {

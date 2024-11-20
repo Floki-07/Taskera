@@ -1,7 +1,7 @@
 import { useState } from "react";
 import TaskCard from "../components/task/TaskCard"
 import { Plus } from "lucide-react";
-import ProgressBar from "../components/progressBar/progressBar";
+import ProgressBar from "../components/progressBar/ProgressBar";
 
 function Tasks() {
 
