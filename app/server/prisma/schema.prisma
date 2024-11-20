@@ -1,0 +1,83 @@
+// This is your Prisma schema file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  uuid        String     @id @default(uuid())
+  analyticsId String     @unique
+  username    String     @unique
+  email       String     @unique
+  avatar      String?
+  level       Int        @default(1)
+  streak      Int        @default(0)
+  
+  // Relations
+  tasks       Task[]
+  courses     Course[]
+  ownedGroups Group[]    @relation("GroupOwner")
+  memberGroups Group[]    @relation("GroupMembers")
+  analytics   Analytics?
+}
+
+model Task {
+  id           String   @id @default(uuid())
+  userId       String
+  name         String
+  type         String
+  priority     Int
+  estTime      Int      
+  deadline     DateTime
+  courseId     String?
+  groupId      String?
+  timeStudied  Int      @default(0)  
+  
+  user         User     @relation(fields: [userId], references: [uuid])
+  course       Course?   @relation(fields: [courseId], references: [id])
+  group        Group?   @relation(fields: [groupId], references: [id])
+}
+
+model Course {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  difficulty  Int
+  
+  tasks       Task[]
+  users       User[]
+  groups      Group[]
+}
+
+model Group {
+  id            String   @id @default(uuid())
+  name          String
+  description   String
+  courseId      String
+  meetingTime   String
+  meetingDay    String
+  ownerId       String
+  pdoroTimer    Boolean  @default(false)
+  
+  // Relations
+  course        Course   @relation(fields: [courseId], references: [id])
+  owner         User     @relation("GroupOwner", fields: [ownerId], references: [uuid])
+  members       User[]   @relation("GroupMembers")
+  tasks         Task[]
+}
+
+model Analytics {
+  id                 String   @id @default(uuid())
+  userId            String   @unique
+  totalTime         Int      @default(0)  
+  completedTasks    Int      @default(0)
+  sessions          Int      @default(0)
+  completedSessions Int      @default(0)
+  
+  user              User     @relation(fields: [userId], references: [uuid])
+}
