@@ -7,7 +7,7 @@ import {
   Plus,
 } from "lucide-react";
 import { useState } from "react";
-import ProgressBar from "../progressBar/progressBar";
+import ProgressBar from "../progressBar/ProgressBar";
 import Milestone from "./Milestone";
 
 function TaskCard() {

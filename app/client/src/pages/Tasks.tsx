@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import TaskCard from "../components/task/TaskCard"
 import { Plus } from "lucide-react";
@@ -25,6 +24,7 @@ function Tasks() {
             <TaskCard />
         </div>
     </div>
-    )}
+  )
+}
 
 export default Tasks
