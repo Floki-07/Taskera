@@ -35,9 +35,17 @@ h6 {
   font-family: var(--bricolage);
 }
 
+/* CSS for calender  */
+.sx-react-calendar-wrapper {
+  width: 850px;
+  max-width: 100vw;
+  height: 600px;
+  max-height: 90vh;
 
+/*  CSS for removing pointers from Input NUmber */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+
 }
