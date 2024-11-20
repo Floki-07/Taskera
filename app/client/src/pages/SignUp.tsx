@@ -22,7 +22,8 @@ function SignUp() {
         email: formdata.email,
       });
       console.log(`API sent:`, response.data);
-      navigate("/home");
+      localStorage.setItem('email',formdata.email);
+      navigate("/otpPage");
     } catch (e) {
       console.log("Error during sending email :", e);
     }
@@ -75,7 +76,7 @@ function SignUp() {
         </button>
 
         <p className="text-white text-[10px] w-3/4 pt-2">
-          By continuing, you agree to SSG's Consumer Terms and Usage Policy, and
+          By continuing, you agree to Taskera's Consumer Terms and Usage Policy, and
           acknowledge their Privacy Policy.
         </p>
       </div>
