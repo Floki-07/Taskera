@@ -10,6 +10,7 @@ import Error from './pages/Error'
 import Analytics from './pages/Analytics'
 import Calendar from './pages/Calendar'
 import { useEffect, useState } from 'react'
+import Details from './pages/Details'
 
 
 const AppLayout = () => {
@@ -17,7 +18,7 @@ const AppLayout = () => {
   const location = useLocation()
 
   useEffect(() => {
-    if (location.pathname === '/') {
+    if (location.pathname === '/' || location.pathname === '/details') {
       setIsLanding(true)
     } else {
       setIsLanding(false)
@@ -36,6 +37,7 @@ const AppLayout = () => {
           <Route path='/signUp' element={<SignUp/>}/>
           <Route path='/analytics' element={<Analytics/>}/>
           <Route path='/calendar' element={<Calendar/>}/>
+          <Route path='/details' element={<Details/>}/>
           <Route path='*' element={<Error/>}/>
         </Routes>
       </div>
