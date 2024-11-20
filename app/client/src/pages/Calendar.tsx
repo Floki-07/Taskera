@@ -91,7 +91,7 @@ function CalendarApp() {
 
   return (
     <div className="flex gap-4">
-      <div className="calender bg-green-400 w-[60vw]">
+      <div className="calender  w-[60vw]">
         <ScheduleXCalendar calendarApp={calendar} />
       </div>
 
