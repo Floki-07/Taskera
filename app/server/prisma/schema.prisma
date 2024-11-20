@@ -11,14 +11,12 @@ datasource db {
 
 model User {
   uuid        String     @id @default(uuid())
-  analyticsId String     @unique
-  username    String     @unique
+  username    String     @default("User")
   email       String     @unique
   avatar      String?
   level       Int        @default(1)
   streak      Int        @default(0)
   
-  // Relations
   tasks       Task[]
   courses     Course[]
   ownedGroups Group[]    @relation("GroupOwner")
@@ -64,7 +62,6 @@ model Group {
   ownerId       String
   pdoroTimer    Boolean  @default(false)
   
-  // Relations
   course        Course   @relation(fields: [courseId], references: [id])
   owner         User     @relation("GroupOwner", fields: [ownerId], references: [uuid])
   members       User[]   @relation("GroupMembers")

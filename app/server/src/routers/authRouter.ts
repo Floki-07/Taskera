@@ -4,6 +4,7 @@ import nodemailer from "nodemailer";
 import passport from "passport";
 import { authMiddleware } from "../middlewares/authMiddleware";
 import crypto from "crypto";
+import { getPrisma } from "../utils/getPrisma";
 
 interface VerificationData {
   code: string;
@@ -11,15 +12,8 @@ interface VerificationData {
   currentEmail?: string;
 }
 
-interface UserPayload {
-  email: string;
-}
-
-interface AuthRequest extends Request {
-  user?: UserPayload;
-}
-
 const router = Router();
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const verificationCodes: Map<string, VerificationData> = new Map();
 
@@ -55,44 +49,41 @@ const sendVerificationCode = async (email: string): Promise<string> => {
   return code;
 };
 
-router.get("/login/success", async (req: Request, res: Response) => {
+router.get("/login/success", async (req: any, res: any) => {
   if (req.user) {
     try {
-      // const prisma = getPrisma();
-      // const user = await prisma.user.upsert({
-      //   where: { email: req.user.email },
-      //   update: {
-      //     googleId: req.user.id,
-      //     googleProfile: JSON.parse(JSON.stringify(req.user._json)),
-      //     avatar: req.user.photos[0].value || '',
-      //   },
-      //   create: {
-      //     name: req.user.displayName,
-      //     email: req.user.email,
-      //     googleId: req.user.id,
-      //     googleProfile: JSON.parse(JSON.stringify(req.user._json)),
-      //     avatar: req.user.photos[0].value || '',
-      //     isVerified: true,
-      //   },
-      // });
+      const prisma = getPrisma();
+      const user = await prisma.user.upsert({
+        where: { email: req.user.email },
+        update: {
+          username: req.user.displayName,
+          email: req.user.email,
+          avatar: req.user.photos[0].value || '',
+        },
+        create: {
+          username: req.user.displayName,
+          email: req.user.email,
+          avatar: req.user.photos[0].value || '',
+        },
+      });
 
-      // const token = jwt.sign({ id: user.id }, JWT_SECRET as string, {
-      //   expiresIn: "3h",
-      // });
+      const token = jwt.sign({ email: user.email }, JWT_SECRET as string, {
+        expiresIn: "3h",
+      });
 
-      // return res.status(200).json({
-      //   error: false,
-      //   message: "Successfully Logged In",
-      //   user: user,
-      //   token: token,
-      // });
+      return res.status(200).json({
+        error: false,
+        message: "Successfully Logged In",
+        user: user,
+        token: token,
+      });
       
     } catch (error) {
       console.error("Error during login success handling:", error);
-      // res.status(500).json({ error: true, message: "Internal Server Error" });
+      res.status(500).json({ error: true, message: "Internal Server Error" });
     }
   } else {
-    // return res.status(403).json({ error: true, message: "Not Authorized" });
+    return res.status(403).json({ error: true, message: "Not Authorized" });
   }
 });
 
@@ -112,12 +103,19 @@ router.get("/logout", (req:Request, res:Response, next:NextFunction) => {
   });
 });
 
-router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+router.get("/google", passport.authenticate("google", { 
+  scope: ["profile", "email"] 
+}));
 
-router.get("/google/callback",passport.authenticate("google", {
-    successRedirect: `${process.env.CLIENT_URL}/details`,
-    failureRedirect: `${process.env.CLIENT_URL}/signup`,
-  })
+router.get("/google/callback",
+  passport.authenticate("google", { 
+      failureRedirect: `${process.env.CLIENT_URL}/signup`,
+      session: false 
+  }),
+  (req: any, res: Response) => {
+      const { token } = req.user;
+      res.redirect(`${process.env.CLIENT_URL}/details?token=${token}`);
+  }
 );
 
 router.post(
@@ -127,6 +125,21 @@ router.post(
       const { email } = req.body as { email: string };
       if (!email || !email.includes("@")) {
         res.status(400).json({ error: "Invalid email" });
+        return;
+      }
+
+      const prisma = getPrisma();
+
+      const exists = await prisma.user.findFirst({
+        where: {
+          email: email
+        }
+      })
+
+      if(exists){
+        res.status(401).json({
+          error: "Email already exists",
+        })
         return;
       }
 
@@ -157,6 +170,14 @@ router.post(
         return;
       }
 
+      const prisma = await getPrisma();
+
+      prisma.user.create({
+        data:{
+          email: email,
+        }
+      })
+
       const token = jwt.sign({ email }, process.env.JWT_SECRET as string, {
         expiresIn: "24h",
       });
@@ -169,66 +190,108 @@ router.post(
   }
 );
 
-// router.post(
-//   "/change-email",
-//   authMiddleware,
-//   async (req: Request, res: Response): Promise<void> => {
-//     try {
-//       const { newEmail } = req.body as { newEmail: string };
-//       if (!newEmail || !newEmail.includes("@")) {
-//         res.status(400).json({ error: "Invalid email" });
-//         return;
-//       }
+router.put('/username', authMiddleware, async (req: any, res: any) => {
+  const { username } = req.body;
+  const email = req.user?.email;
+  console.log(email);
+  const prisma = getPrisma();
 
-//       await sendVerificationCode(newEmail);
+  if (!username) {
+    return res.status(400).json({ error: "Username is required" });
+  }
 
-//       verificationCodes.set(newEmail, {
-//         ...(verificationCodes.get(newEmail) as VerificationData),
-//         currentEmail: (req as AuthRequest).user?.email,
-//       });
-//       res.json({ message: "Verification code sent to new email" });
-//     } catch (error) {
-//       res.status(500).json({ error: "Failed to initiate email change" });
-//     }
-//   }
-// );
+  try {
+    const updatedUser = await prisma.user.update({
+      where: { email: email },
+      data: { username },
+    });
 
-// router.put(
-//   "/change-email",
-//   authMiddleware,
-//   async (req: Request, res: Response): Promise<void> => {
-//     try {
-//       const { newEmail, code } = req.body as { newEmail: string; code: string };
-//       const storedData = verificationCodes.get(newEmail);
+    return res.json({ message: "Username updated successfully", user: updatedUser });
+  } catch (error) {
+    console.error("Error updating username:", error);
+  }
+})
 
-//       if (!storedData || storedData.code !== code) {
-//         res.status(400).json({ error: "Invalid code" });
-//         return;
-//       }
+router.post(
+  "/change-email",
+  authMiddleware,
+  async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { newEmail } = req.body as { newEmail: string };
+      if (!newEmail || !newEmail.includes("@")) {
+        res.status(400).json({ error: "Invalid email" });
+        return;
+      }
 
-//       if (Date.now() > storedData.expiryTime) {
-//         verificationCodes.delete(newEmail);
-//         res.status(400).json({ error: "Code expired" });
-//         return;
-//       }
+      await sendVerificationCode(newEmail);
 
-//       if (storedData.currentEmail !== (req as AuthRequest).user?.email) {
-//         res.status(400).json({ error: "Unauthorized email change" });
-//         return;
-//       }
+      verificationCodes.set(newEmail, {
+        ...(verificationCodes.get(newEmail) as VerificationData),
+        currentEmail: (req as any).user?.email,
+      });
+      res.json({ message: "Verification code sent to new email" });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to initiate email change" });
+    }
+  }
+);
 
-//       const token = jwt.sign(
-//         { email: newEmail },
-//         process.env.JWT_SECRET as string,
-//         { expiresIn: "24h" }
-//       );
-//       verificationCodes.delete(newEmail);
+router.put(
+  "/change-email",
+  authMiddleware,
+  async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { newEmail, code } = req.body as { newEmail: string; code: string };
+      const storedData = verificationCodes.get(newEmail);
 
-//       res.json({ token });
-//     } catch (error) {
-//       res.status(500).json({ error: "Email change failed" });
-//     }
-//   }
-// );
+      if (!storedData || storedData.code !== code) {
+        res.status(400).json({ error: "Invalid code" });
+        return;
+      }
+
+      if (Date.now() > storedData.expiryTime) {
+        verificationCodes.delete(newEmail);
+        res.status(400).json({ error: "Code expired" });
+        return;
+      }
+
+      if (storedData.currentEmail !== (req as any).user?.email) {
+        res.status(400).json({ error: "Unauthorized email change" });
+        return;
+      }
+
+      const token = jwt.sign(
+        { email: newEmail },
+        process.env.JWT_SECRET as string,
+        { expiresIn: "24h" }
+      );
+      verificationCodes.delete(newEmail);
+
+      res.json({ token });
+    } catch (error) {
+      res.status(500).json({ error: "Email change failed" });
+    }
+  }
+);
+
+router.get('/me',authMiddleware,async (req:any,res:any)=>{
+try{
+  const email = req.user?.email;
+  const prisma = await getPrisma();
+
+  const user = prisma.user.findFirst({
+    where:{email:email}
+  })
+
+  return res.status(200).json({
+    user
+  })
+  }catch(e){
+    console.log("Error occured in fetching user Details", e);
+    return res.status(500).json({
+      message: "Internal Server Error"
+    })
+  }
+})
 
 export { router as authRouter };
