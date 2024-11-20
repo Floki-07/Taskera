@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, useAnimation, AnimationControls } from "framer-motion";
 import Play from "../components/playPause/Play";
 import Pause from "../components/playPause/Pause";
-import { RotateCcw } from "lucide-react";
+import { Plus, RotateCcw } from "lucide-react";
 
 interface PomodoroProps {
   duration?: number; // in seconds
@@ -51,16 +51,16 @@ export default function Pomodoro({
   };
 
   const handleReset = (): void => {
-  setIsPlaying(false);
-  setElapsedTime(0);
-  setStartTime(null);
-  controls.set({ strokeDashoffset: circumference }); 
-};
+    setIsPlaying(false);
+    setElapsedTime(0);
+    setStartTime(null);
+    controls.set({ strokeDashoffset: circumference });
+  };
 
   return (
     <>
-      <div className="flex flex-col items-center">
-        <div className="flex items-center justify-center relative">
+      <div className="flex flex-col items-cente justify-center w-full">
+        <div className="flex items-center justify-center relative ">
           <h1 className="absolute text-8xl">
             {`${Math.floor((duration - Math.floor(elapsedTime)) / 60)
               .toString()
@@ -94,7 +94,7 @@ export default function Pomodoro({
               strokeWidth="7"
               fill="none"
               className="text-[--background-2] rounded-full "
-              style={{ rotate: 90, transformOrigin: "center", rotateX : 180 }}
+              style={{ rotate: 90, transformOrigin: "center", rotateX: 180 }}
               initial={{
                 strokeDasharray: circumference,
                 strokeDashoffset: circumference,
@@ -102,19 +102,24 @@ export default function Pomodoro({
               animate={controls}
             />
           </svg>
-          <div className="w-fit absolute bottom-0 flex items-center">
-          <button
-            onClick={togglePlay}
-            className=""
-            aria-label={isPlaying ? "Pause timer" : "Start timer"}
-          >
-            {isPlaying ? <Pause /> : <Play />}
-          </button>
-          {elapsedTime!==0 && <button onClick={handleReset}><RotateCcw /></button>}
+          <div className="w-fit absolute bottom-0 flex items-center gap-4">
+            <button
+              onClick={togglePlay}
+              className=""
+              aria-label={isPlaying ? "Pause timer" : "Start timer"}
+            >
+              {isPlaying ? <Pause /> : <Play />}
+            </button>
+            {elapsedTime !== 0 && (
+              <button onClick={handleReset} className="text-[--secondary]">
+                <RotateCcw size={50}/>
+              </button>
+            )}
+          </div>
         </div>
+        <div className="flex justify-center">
+            <button className="bg-[--secondary] w-fit text-[--ternary] mt-4 px-4 py-2 rounded flex gap-3">Add task<Plus/></button>
         </div>
-
-        
       </div>
     </>
   );
