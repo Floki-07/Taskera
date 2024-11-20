@@ -7,10 +7,14 @@ import SignUp from './pages/SignUp'
 import SideBar from './components/sideBar/SideBar'
 import Tasks from './pages/Tasks'
 import Error from './pages/Error'
+import OTPpage from './pages/OTPpage'
 import Analytics from './pages/Analytics'
 import Calendar from './pages/Calendar'
 import { useEffect, useState } from 'react'
 import Details from './pages/Details'
+import Pomodoro from './pages/Pomodoro'
+
+
 
 
 const AppLayout = () => {
@@ -31,13 +35,17 @@ const AppLayout = () => {
       <div className='flex h-[calc(100%-60px)]'>
         <SideBar isLanding={isLanding}/>
         <Routes>
-          <Route path='/' element={<Landing/>}/>
-          <Route path='/home' element={<Home/>}/>
-          <Route path='/tasks' element={<Tasks/>}/>
-          <Route path='/signUp' element={<SignUp/>}/>
+          <Route path='/' element={<Landing/>}></Route>
+          <Route path='/home' element={<Home/>}></Route>
+          <Route path='/tasks' element={<Tasks/>}></Route>
+          <Route path='/signUp' element={<SignUp/>}></Route>
+          <Route path='/error' element={<Error/>}></Route>
+          <Route path='/otpPage' element={<OTPpage/>}></Route>
+          <Route path='/tasks' element={<Tasks/>}></Route>
           <Route path='/analytics' element={<Analytics/>}/>
           <Route path='/calendar' element={<Calendar/>}/>
           <Route path='/details' element={<Details/>}/>
+          <Route path='/pomodoro' element={<Pomodoro/>}/>
           <Route path='*' element={<Error/>}/>
         </Routes>
       </div>
