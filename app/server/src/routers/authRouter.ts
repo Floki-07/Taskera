@@ -1,8 +1,10 @@
-import { Router, Response, Request } from "express";
+import { Router, Response, Request, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
+import passport from "passport";
 import { authMiddleware } from "../middlewares/authMiddleware";
 import crypto from "crypto";
+import { getPrisma } from "../utils/getPrisma";
 
 interface VerificationData {
   code: string;
@@ -10,15 +12,8 @@ interface VerificationData {
   currentEmail?: string;
 }
 
-interface UserPayload {
-  email: string;
-}
-
-interface AuthRequest extends Request {
-  user?: UserPayload;
-}
-
 const router = Router();
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const verificationCodes: Map<string, VerificationData> = new Map();
 
@@ -54,6 +49,75 @@ const sendVerificationCode = async (email: string): Promise<string> => {
   return code;
 };
 
+router.get("/login/success", async (req: any, res: any) => {
+  if (req.user) {
+    try {
+      const prisma = getPrisma();
+      const user = await prisma.user.upsert({
+        where: { email: req.user.email },
+        update: {
+          username: req.user.displayName,
+          email: req.user.email,
+          avatar: req.user.photos[0].value || '',
+        },
+        create: {
+          username: req.user.displayName,
+          email: req.user.email,
+          avatar: req.user.photos[0].value || '',
+        },
+      });
+
+      const token = jwt.sign({ email: user.email }, JWT_SECRET as string, {
+        expiresIn: "3h",
+      });
+
+      return res.status(200).json({
+        error: false,
+        message: "Successfully Logged In",
+        user: user,
+        token: token,
+      });
+      
+    } catch (error) {
+      console.error("Error during login success handling:", error);
+      res.status(500).json({ error: true, message: "Internal Server Error" });
+    }
+  } else {
+    return res.status(403).json({ error: true, message: "Not Authorized" });
+  }
+});
+
+router.get("/login/failed", (_:Request, res: Response) => {
+  res.status(401).json({
+    error: true,
+    message: "Log in failure",
+  });
+  return;
+});
+
+router.get("/logout", (req:Request, res:Response, next:NextFunction) => {
+  req.logout((err) => {
+    if (err) { return next(err); }
+    const clientUrl = process.env.CLIENT_URL || "/";
+    res.redirect(clientUrl);
+  });
+});
+
+router.get("/google", passport.authenticate("google", { 
+  scope: ["profile", "email"] 
+}));
+
+router.get("/google/callback",
+  passport.authenticate("google", { 
+      failureRedirect: `${process.env.CLIENT_URL}/signup`,
+      session: false 
+  }),
+  (req: any, res: Response) => {
+      const { token } = req.user;
+      res.redirect(`${process.env.CLIENT_URL}/details?token=${token}`);
+  }
+);
+
 router.post(
   "/email",
   async (req: Request, res: Response): Promise<void> => {
@@ -61,6 +125,21 @@ router.post(
       const { email } = req.body as { email: string };
       if (!email || !email.includes("@")) {
         res.status(400).json({ error: "Invalid email" });
+        return;
+      }
+
+      const prisma = getPrisma();
+
+      const exists = await prisma.user.findFirst({
+        where: {
+          email: email
+        }
+      })
+
+      if(exists){
+        res.status(401).json({
+          error: "Email already exists",
+        })
         return;
       }
 
@@ -91,6 +170,14 @@ router.post(
         return;
       }
 
+      const prisma = await getPrisma();
+
+      prisma.user.create({
+        data:{
+          email: email,
+        }
+      })
+
       const token = jwt.sign({ email }, process.env.JWT_SECRET as string, {
         expiresIn: "24h",
       });
@@ -102,6 +189,28 @@ router.post(
     }
   }
 );
+
+router.put('/username', authMiddleware, async (req: any, res: any) => {
+  const { username } = req.body;
+  const email = req.user?.email;
+  console.log(email);
+  const prisma = getPrisma();
+
+  if (!username) {
+    return res.status(400).json({ error: "Username is required" });
+  }
+
+  try {
+    const updatedUser = await prisma.user.update({
+      where: { email: email },
+      data: { username },
+    });
+
+    return res.json({ message: "Username updated successfully", user: updatedUser });
+  } catch (error) {
+    console.error("Error updating username:", error);
+  }
+})
 
 router.post(
   "/change-email",
@@ -118,7 +227,7 @@ router.post(
 
       verificationCodes.set(newEmail, {
         ...(verificationCodes.get(newEmail) as VerificationData),
-        currentEmail: (req as AuthRequest).user?.email,
+        currentEmail: (req as any).user?.email,
       });
       res.json({ message: "Verification code sent to new email" });
     } catch (error) {
@@ -146,7 +255,7 @@ router.put(
         return;
       }
 
-      if (storedData.currentEmail !== (req as AuthRequest).user?.email) {
+      if (storedData.currentEmail !== (req as any).user?.email) {
         res.status(400).json({ error: "Unauthorized email change" });
         return;
       }
@@ -164,5 +273,25 @@ router.put(
     }
   }
 );
+
+router.get('/me',authMiddleware,async (req:any,res:any)=>{
+try{
+  const email = req.user?.email;
+  const prisma = await getPrisma();
+
+  const user = prisma.user.findFirst({
+    where:{email:email}
+  })
+
+  return res.status(200).json({
+    user
+  })
+  }catch(e){
+    console.log("Error occured in fetching user Details", e);
+    return res.status(500).json({
+      message: "Internal Server Error"
+    })
+  }
+})
 
 export { router as authRouter };

@@ -12,6 +12,9 @@ import Analytics from './pages/Analytics'
 import Calendar from './pages/Calendar'
 import { useEffect, useState } from 'react'
 import Dates from './pages/Dates'
+import Details from './pages/Details'
+import Pomodoro from './pages/Pomodoro'
+
 
 
 
@@ -20,7 +23,7 @@ const AppLayout = () => {
   const location = useLocation()
 
   useEffect(() => {
-    if (location.pathname === '/') {
+    if (location.pathname === '/' || location.pathname === '/details') {
       setIsLanding(true)
     } else {
       setIsLanding(false)
@@ -43,6 +46,8 @@ const AppLayout = () => {
           <Route path='/analytics' element={<Analytics/>}/>
           <Route path='/calendar' element={<Calendar/>}/>
           <Route path='/Dates' element={<Dates/>}/>
+          <Route path='/details' element={<Details/>}/>
+          <Route path='/pomodoro' element={<Pomodoro/>}/>
           <Route path='*' element={<Error/>}/>
         </Routes>
       </div>
