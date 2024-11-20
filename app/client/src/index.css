@@ -17,11 +17,13 @@
 
 * {
   margin: 0px;
+  padding: 0px;
 }
 
 html,
 body {
   font-family: Manrope;
+  background-color: var(--ternary);
 }
 
 h1,

@@ -6,6 +6,7 @@ import NavBar from './components/navbar/NavBar'
 import SignUp from './pages/SignUp'
 import SideBar from './components/sideBar/SideBar'
 import Tasks from './pages/Tasks'
+import Error from './pages/Error'
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
           <Route path='/home' element={<Home/>}></Route>
           <Route path='/tasks' element={<Tasks/>}></Route>
           <Route path='/signUp' element={<SignUp/>}></Route>
+          <Route path='/error' element={<Error/>}></Route>
 
           <Route path='/tasks' element={<Tasks/>}></Route>
 
