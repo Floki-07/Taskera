@@ -28,6 +28,7 @@ function SignUp() {
     }
   };
 
+
   const handleOauth = () => {
     window.location.href = `${BASE_URL}/api/v1/auth/google`;
   };
