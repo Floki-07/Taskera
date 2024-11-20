@@ -34,3 +34,10 @@ h5,
 h6 {
   font-family: var(--bricolage);
 }
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

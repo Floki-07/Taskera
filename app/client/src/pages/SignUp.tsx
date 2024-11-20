@@ -16,8 +16,8 @@ function SignUp() {
   
     return (
     <div className='h-[calc(100vh-60px)] w-[100vw] bg-[var(--ternary)] flex items-center justify-center' > 
-            <div className='h-[70vh] w-[65vh] bg-[var(--background-2)] rounded-md flex flex-col justify-start items-center gap-4 p-3'>
-                <h3 className='text-[var(--secondary)] text-[40px] pb-5 pt-10'>Welcome to Taskera</h3>
+            <div className='h-fit w-[70vh] bg-[var(--background-2)] rounded-md flex flex-col justify-start items-center gap-4 p-[40px]'>
+                <h3 className='text-[var(--secondary)] text-[40px] pb-5 pt-2'>Welcome to Taskera</h3>
                 <button className='h-[50px] w-[80%] bg-[var(--ternary)] text-white flex justify-center items-center rounded-[5px]'>
                     <img src="/images/google.png" alt="" className='h-[32px] w-[32px] mr-4'/>Sign up with google
                 </button>
@@ -31,7 +31,7 @@ function SignUp() {
 
                 <button className='h-[50px] w-[80%] bg-[var(--secondary)] text-black flex justify-center items-center rounded-[5px]'>Continue with email</button>
 
-                <p className='text-white text-[10px] w-3/4 pt-2'>By continuing, you agree to SSG's Consumer Terms and Usage Policy, 
+                <p className='text-white text-[12px] w-3/4 pt-2'>By continuing, you agree to SSG's Consumer Terms and Usage Policy, 
                 and acknowledge their Privacy Policy.</p>
 
 

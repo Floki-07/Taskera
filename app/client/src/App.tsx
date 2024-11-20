@@ -11,6 +11,7 @@ import OTPpage from './pages/OTPpage'
 import Analytics from './pages/Analytics'
 import Calendar from './pages/Calendar'
 import { useEffect, useState } from 'react'
+import Dates from './pages/Dates'
 
 
 
@@ -41,6 +42,7 @@ const AppLayout = () => {
           <Route path='/tasks' element={<Tasks/>}></Route>
           <Route path='/analytics' element={<Analytics/>}/>
           <Route path='/calendar' element={<Calendar/>}/>
+          <Route path='/Dates' element={<Dates/>}/>
           <Route path='*' element={<Error/>}/>
         </Routes>
       </div>
