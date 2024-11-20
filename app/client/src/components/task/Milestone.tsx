@@ -1,9 +1,19 @@
 import { useState } from "react";
 import SubTasks from "./SubTasks";
 
-function Milestone() {
+function Milestone({
+    ms, 
+    taskIndex, 
+    milestoneIndex, 
+    updateSubtask,
+}: {
+    ms: any, 
+    taskIndex: number, 
+    milestoneIndex: number,
+    updateSubtask: (taskIndex: number, milestoneIndex: number, subtaskIndex: number, done: boolean) => void
+}) {
 
-    const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <div className="flex flex-col">
@@ -16,9 +26,16 @@ function Milestone() {
       </div>
 
       {isOpen && <div className="border-l ml-1 p-4">
-            <SubTasks/>
-            <SubTasks/>
-            <SubTasks/>
+            {ms.subtasks.map((task : any , i : number) =>(
+              <SubTasks
+                  key={i}
+                  task={task}
+                  taskIndex={taskIndex}
+                  milestoneIndex={milestoneIndex}
+                  subtaskIndex={i}
+                  updateSubtask={updateSubtask}
+              />
+            ))}
       </div>}
     </div>
   );

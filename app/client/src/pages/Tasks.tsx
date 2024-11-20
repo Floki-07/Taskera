@@ -3,13 +3,142 @@ import TaskCard from "../components/task/TaskCard"
 import { Plus } from "lucide-react";
 import ProgressBar from "../components/progressBar/ProgressBar";
 
+interface Subtask {
+  name: string;
+  done: boolean;
+}
+
+interface Milestone {
+  name: string;
+  subtasks: Subtask[];
+  done: boolean;
+}
+
+interface Task {
+  name: string;
+  milestone: Milestone[];
+  done: boolean;
+}
+
+
 function Tasks() {
 
     const [isActive, setIsActive] = useState<string>('All');
+    const [tasks, setTasks] = useState<Task[]>([{
+    name : 'EVS OBA completion',
+    milestone:[{
+        name:'Buy Pink Book',
+        subtasks: [{
+            name:'go to clg',
+            done:false,
+        },{
+            name:'go to clg',
+            done:false,
+        },{
+            name:'go to clg',
+            done:false,
+        }],
+        done:false,
+    },{
+        name:'Buy Pink Book',
+        subtasks: [{
+            name:'go to clg',
+            done:false,
+        },{
+            name:'go to clg',
+            done:false,
+        },{
+            name:'go to clg',
+            done:false,
+        }],
+        done:false,
+    }],
+    done:false
+},{
+    name : 'EVS OBA completion',
+    milestone:[{
+        name:'Buy Pink Book',
+        subtasks: [{
+            name:'go to clg',
+            done:false,
+        },{
+            name:'go to clg',
+            done:false,
+        },{
+            name:'go to clg',
+            done:false,
+        }],
+        done:false,
+    }],
+    done:false
+},{
+    name : 'EVS OBA completion',
+    milestone:[{
+        name:'Buy Pink Book',
+        subtasks: [{
+            name:'go to clg',
+            done:false,
+        },{
+            name:'go to clg',
+            done:false,
+        },{
+            name:'go to clg',
+            done:false,
+        }],
+        done:false,
+    },{
+        name:'Buy Blue Book',
+        subtasks: [{
+            name:'go to clg',
+            done:false,
+        },{
+            name:'go to clg',
+            done:false,
+        },{
+            name:'go to clg',
+            done:false,
+        }],
+        done:false,
+    }],
+    done:false
+},])
+
+    const handleAddTask = () => {
+        console.log('task added')
+    }
 
     const list = ['Today', 'All'].map((item : any,i : number) => (
         <button key={i} onClick={()=>{setIsActive(item)}} className={`${isActive === item ? 'bg-[--secondary] text-[--ternary]' : 'bg-[--background-2]  text-[--secondary]'} rounded px-3 py-1`}>{item}</button>
     ))
+
+
+    const updateSubtask = (taskIndex: number, milestoneIndex: number, subtaskIndex: number, done: boolean) => {
+        const newTasks = [...tasks];
+        newTasks[taskIndex].milestone[milestoneIndex].subtasks[subtaskIndex].done = done;
+        
+        const allSubtasksDone = newTasks[taskIndex].milestone[milestoneIndex].subtasks.every(subtask => subtask.done);
+        newTasks[taskIndex].milestone[milestoneIndex].done = allSubtasksDone;
+        
+        const allMilestonesDone = newTasks[taskIndex].milestone.every(milestone => milestone.done);
+        newTasks[taskIndex].done = allMilestonesDone;
+
+        setTasks(newTasks);
+    }
+
+    const taskList = tasks.map((task, taskIndex) => (
+        <div key={taskIndex}>
+            <TaskCard 
+                item={task} 
+                setTasks={setTasks} 
+                taskIndex={taskIndex}
+                updateSubtask={updateSubtask}
+            />
+        </div>
+    ));
+
+    const length = tasks.length;
+    const donetaskList = tasks.filter((item : any) => (item.done))
+    const doneLength = donetaskList.length;
 
   return (
     <div className="w-full flex flex-col items-center py-10 gap-4">
@@ -17,11 +146,13 @@ function Tasks() {
             <div className="flex gap-4 ">
                 {list}
             </div>
-            <button className="bg-[--secondary] text-[--ternary] rounded-full p-1"><Plus/></button>
+            <button className="bg-[--secondary] text-[--ternary] rounded-full p-1" onClick={handleAddTask}><Plus/></button>
         </div>
         <div className="w-2/3">
-            <ProgressBar progress={1}/>
-            <TaskCard />
+            <div className="sticky top-0">
+                <ProgressBar progress={doneLength/length}/>
+            </div>
+            {taskList}
         </div>
     </div>
   )
