@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import EditHrsModal from '../components/modal/EditHrsModal';
 
 function Dates() {

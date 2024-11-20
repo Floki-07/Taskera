@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react'
 import Dates from './pages/Dates'
 import Details from './pages/Details'
 import Pomodoro from './pages/Pomodoro'
+import AuthHOC from './hooks/AuthHoc'
 
 
 
@@ -37,17 +38,16 @@ const AppLayout = () => {
         <SideBar isLanding={isLanding}/>
         <Routes>
           <Route path='/' element={<Landing/>}></Route>
-          <Route path='/home' element={<Home/>}></Route>
-          <Route path='/tasks' element={<Tasks/>}></Route>
+          <Route path='/home' element={<AuthHOC><Home/></AuthHOC>}></Route>
+          <Route path='/tasks' element={<AuthHOC><Tasks/></AuthHOC>}></Route>
           <Route path='/signUp' element={<SignUp/>}></Route>
           <Route path='/error' element={<Error/>}></Route>
           <Route path='/otpPage' element={<OTPpage/>}></Route>
-          <Route path='/tasks' element={<Tasks/>}></Route>
-          <Route path='/analytics' element={<Analytics/>}/>
-          <Route path='/calendar' element={<Calendar/>}/>
-          <Route path='/Dates' element={<Dates/>}/>
+          <Route path='/analytics' element={<AuthHOC><Analytics/></AuthHOC>}/>
+          <Route path='/calendar' element={<AuthHOC><Calendar/></AuthHOC>}/>
+          <Route path='/Dates' element={<AuthHOC><Dates/></AuthHOC>}/>
           <Route path='/details' element={<Details/>}/>
-          <Route path='/pomodoro' element={<Pomodoro/>}/>
+          <Route path='/pomodoro' element={<AuthHOC><Pomodoro/></AuthHOC>}/>
           <Route path='*' element={<Error/>}/>
         </Routes>
       </div>
