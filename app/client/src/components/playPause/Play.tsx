@@ -1,0 +1,22 @@
+function Play() {
+  return (
+    <svg
+      width="85"
+      height="85"
+      viewBox="0 0 85 85"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M21.25 14.2883C21.25 12.706 23.0005 11.7503 24.3315 12.606L68.2163 40.8176C69.441 41.6049 69.441 43.3951 68.2163 44.1824L24.3315 72.394C23.0005 73.2497 21.25 72.294 21.25 70.7117V14.2883Z"
+        fill="#B8B8FF"
+        stroke="#C8B6FF"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+}
+
+export default Play;
