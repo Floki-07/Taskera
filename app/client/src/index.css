@@ -34,3 +34,11 @@ h5,
 h6 {
   font-family: var(--bricolage);
 }
+
+/* CSS for calender  */
+.sx-react-calendar-wrapper {
+  width: 850px;
+  max-width: 100vw;
+  height: 600px;
+  max-height: 90vh;
+}
