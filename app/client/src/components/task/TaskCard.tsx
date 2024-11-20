@@ -1,7 +1,6 @@
 import {
   AlarmClock,
   ChevronDown,
-  ChevronFirst,
   ChevronUp,
   Flag,
   Plus,
