@@ -15,9 +15,7 @@ import Dates from './pages/Dates'
 import Details from './pages/Details'
 import Pomodoro from './pages/Pomodoro'
 import AuthHOC from './hooks/AuthHoc'
-
-
-
+import { Toaster } from 'sonner'
 
 const AppLayout = () => {
   const [isLanding, setIsLanding] = useState(false)
@@ -33,10 +31,11 @@ const AppLayout = () => {
 
   return (
     <div className='bg-[--ternary] h-screen text-[--primary]'>
+      <Toaster richColors/>
       <NavBar isLanding={isLanding}/>
       <div className='flex h-[calc(100%-60px)]'>
         <SideBar isLanding={isLanding}/>
-        <Routes>
+        {/* <Routes>
           <Route path='/' element={<Landing/>}></Route>
           <Route path='/home' element={<AuthHOC><Home/></AuthHOC>}></Route>
           <Route path='/tasks' element={<AuthHOC><Tasks/></AuthHOC>}></Route>
@@ -48,6 +47,22 @@ const AppLayout = () => {
           <Route path='/Dates' element={<AuthHOC><Dates/></AuthHOC>}/>
           <Route path='/details' element={<Details/>}/>
           <Route path='/pomodoro' element={<AuthHOC><Pomodoro/></AuthHOC>}/>
+          <Route path='*' element={<Error/>}/>
+        </Routes> */}
+        
+
+        <Routes>
+          <Route path='/' element={<Landing/>}></Route>
+          <Route path='/home' element={<Home/>}></Route>
+          <Route path='/tasks' element={<Tasks/>}></Route>
+          <Route path='/signUp' element={<SignUp/>}></Route>
+          <Route path='/error' element={<Error/>}></Route>
+          <Route path='/otpPage' element={<OTPpage/>}></Route>
+          <Route path='/analytics' element={<Analytics/>}/>
+          <Route path='/calendar' element={<Calendar/>}/>
+          <Route path='/Dates' element={<Dates/>  }/>
+          <Route path='/details' element={<Details/>}/>
+          <Route path='/pomodoro' element={<Pomodoro/>}/>
           <Route path='*' element={<Error/>}/>
         </Routes>
       </div>

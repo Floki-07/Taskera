@@ -46,8 +46,8 @@ function Home() {
   const [isPriorityDropdownOpen, setIsPriorityDropdownOpen] = useState(false);
   const [remidersSelected, setRemidersSelected] = useState(false)
   return (
-    <div className="flex flex-col">
-      <h1 className="text-[34px] ml-4 mt-6">Welcome back Aaryan,</h1>
+    <div className="flex flex-col px-5 py-4">
+      <h1 className="text-[34px] ">Welcome back Aaryan,</h1>
       <div className="flex">
         {homeItems.map((item) => (
           <Box

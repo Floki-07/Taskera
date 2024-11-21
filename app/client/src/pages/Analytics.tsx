@@ -51,14 +51,14 @@ function Analytics() {
 
   return (
     <>
-      <div className="space-y-6 p-12">
+      <div className="space-y-6 p-12 bg-inherit">
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <Card>
-            <CardContent className="p-6">
+            <CardContent className="p-6 ">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Total Study Time</p>
+                  <p className="text-sm font-medium text-[--secondary]">Total Study Time</p>
                   <h3 className="text-2xl font-bold mt-1">
                     {Math.round(studyStats.totalStudyTime / 60)}h
                   </h3>
@@ -72,7 +72,7 @@ function Analytics() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Tasks Completed</p>
+                  <p className="text-sm font-medium text-[--secondary]">Tasks Completed</p>
                   <h3 className="text-2xl font-bold mt-1">
                     {studyStats.tasksCompleted}/{studyStats.tasksTotal}
                   </h3>
@@ -86,7 +86,7 @@ function Analytics() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Focus Sessions</p>
+                  <p className="text-sm font-medium text-[--secondary]">Focus Sessions</p>
                   <h3 className="text-2xl font-bold mt-1">
                     {studyStats.sessionsCompleted}
                   </h3>
@@ -100,7 +100,7 @@ function Analytics() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Completion Rate</p>
+                  <p className="text-sm font-medium text-[--secondary]">Completion Rate</p>
                   <h3 className="text-2xl font-bold mt-1">
                     {Math.round((studyStats.tasksCompleted / studyStats.tasksTotal) * 100)}%
                   </h3>
@@ -124,7 +124,7 @@ function Analytics() {
                   <LineChart data={dailyStudyData}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="date" />
-                    <YAxis />
+                    <YAxis className=""/>
                     <Tooltip />
                     <Legend />
                     <Line 
@@ -201,22 +201,22 @@ function Analytics() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                <div className="p-4 bg-gray-50 rounded-lg">
+                <div className="p-4 bg-[--ternary] rounded-lg">
                   <h4 className="font-medium mb-2">Most Productive Time</h4>
                   <p className="text-gray-600">Based on your study patterns: Morning</p>
                 </div>
-                <div className="p-4 bg-gray-50 rounded-lg">
+                <div className="p-4 bg-[--ternary] rounded-lg">
                   <h4 className="font-medium mb-2">Average Session Length</h4>
                   <p className="text-gray-600">
                     {studyStats.averageSessionLength} minutes
                   </p>
                 </div>
-                <div className="p-4 bg-gray-50 rounded-lg">
+                <div className="p-4 bg-[--ternary]rounded-lg">
                   <h4 className="font-medium mb-2">Focus Score</h4>
                   <div className="flex items-center gap-2">
-                    <div className="flex-1 bg-gray-200 h-2 rounded-full">
+                    <div className="flex-1 bg-[--ternary] h-2 rounded-full">
                       <div 
-                        className="bg-blue-500 h-2 rounded-full"
+                        className="bg-[--secondary] h-2 rounded-full"
                         style={{ 
                           width: `${(studyStats.focusTime / studyStats.totalStudyTime) * 100}%` 
                         }}
