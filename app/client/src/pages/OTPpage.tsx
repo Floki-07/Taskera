@@ -8,6 +8,7 @@ function OTPpage() {
   const navigate = useNavigate();
   const [code, setCode] = useState<string[]>(Array(6).fill(""));
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  
 
   const handleCodeChange = (index: number, value: string) => {
     if (!/^\d*$/.test(value)) return;
@@ -54,7 +55,7 @@ function OTPpage() {
         <h1 className="text-[--secondary] text-[40px] pt-[30px]">
           Verify Email
         </h1>
-        <p className="text-[10px] pb-7">Code has been sent to {email}</p>
+        <p className="text-[14px] pb-2">Code has been sent to {email}</p>
         <hr className="border-[--secondary] h-1 w-3/4 pb-6" />
         <div className="h-[65px] w-full flex justify-center gap-2">
           {code.map((digit, index) => (
@@ -74,15 +75,16 @@ function OTPpage() {
             />
           ))}
         </div>
-        <p className="text-[10px]  pt-5">Didnt get the code?</p>
-        <p className="text-[10px] text-[--secondary] pb-3">Resend OTP</p>
+        <p className="text-[15px]  pt-5">Didnt get the code?</p>
+        <p className="text-[13px] text-[--secondary] pb-3 hover:cursor-pointer">Resend OTP</p>
 
         <button className="h-fit w-[80%] bg-[--ternary] p-4 text-[--secondary] flex justify-center items-center rounded-[40px] mb-5" onClick={handleVerify}>
           Verify
         </button>
         <hr className="border-[--secondary] h-1 w-3/4 pb-6" />
         <div className="flex w-full ml-[90px]">
-          <p className="text-[--secondary] text-[12px] inline">Go back</p>
+          <p className="text-[--secondary] text-[14px] inline hover:cursor-pointer"
+              onClick={() => {navigate('/signUp')}}>Go back</p>
         </div>
       </div>
     </div>

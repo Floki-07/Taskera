@@ -1,5 +1,7 @@
 import { useState, useRef } from 'react'
 import EditHrsModal from '../components/modal/EditHrsModal';
+import { MoveRight } from 'lucide-react';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function Dates() {
     const [dateData, setDateData] = useState([
@@ -16,6 +18,8 @@ function Dates() {
     const [toggleModal, setToggleModal] = useState(false);
     const modalRef = useRef(null);
 
+    const navigate = useNavigate();
+
     const handleEdit = (value: any) => {
         setSelectedDate(value);
         setToggleModal(true);
@@ -25,20 +29,10 @@ function Dates() {
         setToggleModal(false);
     }
 
-    // useEffect(() => {
-    //     const handleClickOutside = (event : any) => {
-    //         if (modalRef.current && !modalRef.current.contains(event.target)) {
-    //             closeModal();
-    //         }
-    //     };
+    const handleSubmit =() =>{
+        navigate('/home');
+    }
 
-    //     if (toggleModal) {
-    //         document.addEventListener('mousedown', handleClickOutside);
-    //         return () => {
-    //             document.removeEventListener('mousedown', handleClickOutside);
-    //         };
-    //     }
-    // }, [toggleModal]);
 
     return (
         <div className='h-[calc(100vh-60px)] w-[100vw] flex justify-center items-center'>
@@ -74,6 +68,11 @@ function Dates() {
                             <div className='text-center text-[--secondary]'>{value.hrs}hr</div>
                         </div>
                     ))}
+                    <div className='bg-[var(--secondary)] h-[40px] w-[40px] rounded-[100%]  text-center mt-1'>
+                     <button onClick={handleSubmit}>
+                            <MoveRight className='mt-2 mx-auto text-black hover:rotate-[-45deg] transition-all hover:cursor-pointer delay-50' />
+                            </button>
+                            </div>
                 </div>
             </div>
         </div>
