@@ -16,6 +16,7 @@ import Details from './pages/Details'
 import Pomodoro from './pages/Pomodoro'
 import AuthHOC from './hooks/AuthHoc'
 import { Toaster } from 'sonner'
+import { ThemeProvider } from './components/theme-provider'
 
 const AppLayout = () => {
   const [isLanding, setIsLanding] = useState(false)
@@ -71,9 +72,11 @@ const AppLayout = () => {
 
 function App() {
   return (
-    <Router>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <Router>
       <AppLayout />
-    </Router>
+      </Router>
+    </ThemeProvider>
   )
 }
 
