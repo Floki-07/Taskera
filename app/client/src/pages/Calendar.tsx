@@ -88,7 +88,7 @@ function CalendarApp() {
     <div className="flex gap-4">
       <div className="calender  w-[60vw]">
         <ScheduleXCalendar calendarApp={calendar} />
-      </div>
+      </div>  
 
       <div className="upcoming tasks flex flex-col b w-[30vw] gap-3 items-center pt-10">
         <div className="text-start w-[20vw] text-[30px]">
@@ -96,8 +96,8 @@ function CalendarApp() {
         </div>
 
         {events.map((item: CalendarEvent) => (
-          <div className="w-[20vw] bg-[var(--background-2)] h-[14vh] p-5" key={item.id}>
-            <h1 className="text-[20px]">{item.title}</h1>
+          <div className="w-[20vw] bg-[var(--background-2)] h-[14vh] p-5 rounded-xl" key={item.id}>
+            <h1 className="text-[20px] text-[--secondary]">{item.title}</h1>
             <h3 className="text-sm font-light">
               {/* Format updated start time */}
               {format(new Date(item.start), 'h:mm a')}
