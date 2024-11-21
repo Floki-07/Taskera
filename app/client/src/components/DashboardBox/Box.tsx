@@ -14,7 +14,7 @@ const Box: React.FC<BoxProps> = ({ Icon, title, url }) => {
 
   return (
     <div
-      className="bg-[var(--background-2)] m-4 w-[120px] h-[109px] flex flex-col p-2 rounded-md cursor-pointer"
+      className="bg-[var(--background-2)] m-4 min-w-[120px] h-[109px] flex flex-col p-4 rounded-md cursor-pointer"
       onClick={() => navigate(url)} 
     >
       <div
