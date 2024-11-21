@@ -21,29 +21,24 @@ interface CalendarEvent {
 }
 
 const initialEvents: CalendarEvent[] = [
+  
   {
     id: '1',
     title: 'EVS OBA',
-    start: '2024-11-20 12:00',
-    end: '2024-11-22 13:00',
+    start: '2024-11-21 15:00',
+    end: '2024-11-21 16:00',
   },
   {
     id: '2',
-    title: 'Event 2',
-    start: '2024-11-21 15:00',
-    end: '2024-11-21 17:00',
-  },
-  {
-    id: '3',
-    title: 'Event 3',
-    start: '2024-11-21 03:00',
+    title: 'FAFL Assignment',
+    start: '2024-11-21 17:00',
     end: '2024-11-21 05:00',
   },
   {
-    id: '4',
-    title: 'Event 4',
-    start: '2024-11-21 21:00',
-    end: '2024-11-21 23:00',
+    id: '3',
+    title: 'Hackathon',
+    start: '2024-11-21 11:00',
+    end: '2024-11-21 12:00',
   },
 ]
 

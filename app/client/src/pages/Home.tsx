@@ -62,17 +62,23 @@ function Home() {
       {/* Task Modal */}
       {taskModalOpen && (
         <>
-          <div className="h-[100vh] w-[100vw] absolute bg-black/50 top-0 left-0 flex items-center z-[10]">
-            
+          <div onClick={()=>setTaskModalOpen(false)} className="h-[100vh] w-[100vw] absolute bg-black/50 top-0 left-0 flex items-center z-[10]">
+
             <div className="relative bg-[var(--background-2)] h-[40vh] w-[65vw] mx-auto rounded-md translate-y-[-10%] z-[20] px-8 py-6">
               {/* Task Title Input */}
-              <div className="h-[16vh] mb-4">
+              <div className="min-h-[20vh] mb-4 flex  justify-between ">
                 <input
                   type="text"
-                  className="text-xl outline-none text-white w-[43vw] bg-[var(--background-2)] placeholder:text-gray-400"
+                  className="text-xl outline-none text-white  w-[38vw] bg-[var(--background-2)] placeholder:text-gray-400 h-[8vh]"
                   placeholder="Enter your task title"
                   autoFocus
                 />
+
+                <div className="flex justify-end">
+                  <button className="bg-[var(--secondary)]  px-3 py-1 rounded-[10px] text-center hover:bg-[var(--secondary)] w-[8vw] flex items-center text-black  h-[6vh] hover:bg-purple-400" >
+                    <span className="text-black mx-auto font-bold "> Create </span>
+                  </button>
+                </div>
               </div>
 
               {/* Task Options */}
@@ -113,12 +119,12 @@ function Home() {
                 </div>
 
                 {/* Reminder Option */}
-                <div className={`${remidersSelected ?'bg-[var(--secondary)]':'bg-white'} w-[10vw] 
+                <div className={`${remidersSelected ? 'bg-[var(--secondary)]' : 'bg-white'} w-[11vw] 
                 rounded-md flex justify-center items-center text-black py-2 px-1`}>
                   <input type="checkbox"
-                    checked={remidersSelected} 
-                    onChange={()=>setRemidersSelected(!remidersSelected)} 
-                   className="mr-2 bg-black" />
+                    checked={remidersSelected}
+                    onChange={() => setRemidersSelected(!remidersSelected)}
+                    className="mr-2 bg-black" />
                   Set Reminders
                 </div>
 
@@ -156,19 +162,15 @@ function Home() {
                 </div>
 
 
-                  {/* Estd time */}
+                {/* Estd time */}
 
-                  <input type="number"  className="py-2 rounded-md w-[8vw] text-black px-1" placeholder="Est. Time(hrs) "/>
+                <input type="text" className="py-2 rounded-md w-[8vw] text-black px-1" placeholder="Est. Time(hrs) " />
 
 
               </div>
 
               {/* Submit Button */}
-              <div className="flex justify-end">
-                <button className="bg-[var(--secondary)]  px-3 py-1 rounded-[10px] text-center hover:bg-[var(--secondary)] w-[8vw] flex items-center text-black" >
-                 <span className="text-black mx-auto font-bold "> Create </span>
-                </button>
-              </div>
+
             </div>
           </div>
         </>
