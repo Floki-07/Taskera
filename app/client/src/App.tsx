@@ -22,7 +22,7 @@ const AppLayout = () => {
   const location = useLocation()
 
   useEffect(() => {
-    if (location.pathname === '/' || location.pathname === '/details') {
+    if (location.pathname === '/' || location.pathname === '/details'|| location.pathname === '/signup') {
       setIsLanding(true)
     } else {
       setIsLanding(false)
@@ -49,7 +49,6 @@ const AppLayout = () => {
           <Route path='/pomodoro' element={<AuthHOC><Pomodoro/></AuthHOC>}/>
           <Route path='*' element={<Error/>}/>
         </Routes> */}
-        
 
         <Routes>
           <Route path='/' element={<Landing/>}></Route>
