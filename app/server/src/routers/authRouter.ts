@@ -95,8 +95,8 @@ router.get("/login/failed", (_:Request, res: Response) => {
   return;
 });
 
-router.get("/logout", (req:Request, res:Response, next:NextFunction) => {
-  req.logout((err) => {
+router.get("/logout", (req:any, res:Response, next:NextFunction) => {
+  req.logout((err:any) => {
     if (err) { return next(err); }
     const clientUrl = process.env.CLIENT_URL || "/";
     res.redirect(clientUrl);
