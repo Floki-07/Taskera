@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { BASE_URL } from "../utils/vars";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import Spinner from "@/components/spinner/Spinner";
 
 function SignUp() {
   type formData = {
@@ -10,6 +12,7 @@ function SignUp() {
 
   const [formdata, setFormData] = useState<formData>({ email: "" });
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const updateForm = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target;
@@ -17,15 +20,20 @@ function SignUp() {
   };
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     try {
       const response = await axios.post(`${BASE_URL}/api/v1/auth/email`, {
         email: formdata.email,
       });
       console.log(`API sent:`, response.data);
       localStorage.setItem('email',formdata.email);
+      toast.success('Otp sent Successfully');
       navigate("/otpPage");
-    } catch (e) {
+      setIsLoading(false);
+    } catch (e : any) {
+      toast.error(e.message)
       console.log("Error during sending email :", e);
+      setIsLoading(false);
     }
   };
 
@@ -68,12 +76,14 @@ function SignUp() {
           onChange={updateForm}
         />
 
-        <button
-          className="h-[50px] w-[80%] bg-[var(--secondary)] text-black flex justify-center items-center rounded-[5px]"
+        <div className="h-[50px] w-[80%] bg-[var(--secondary)] text-black flex justify-center items-center rounded-[5px]">
+          {isLoading ? <Spinner/> : <button
+          className=""
           onClick={handleSubmit}
         >
           Continue with email
-        </button>
+        </button>}
+        </div>
 
         <p className="text-white text-[10px] w-3/4 pt-2">
           By continuing, you agree to Taskera's Consumer Terms and Usage Policy, and
