@@ -25,64 +25,14 @@ function Tasks() {
 
     const [isActive, setIsActive] = useState<string>('All');
     const [tasks, setTasks] = useState<Task[]>([{
-    name : 'EVS OBA completion',
+    name : 'Exam study',
     milestone:[{
-        name:'Buy Pink Book',
+        name:'Get resources',
         subtasks: [{
-            name:'go to clg',
+            name:'gather resources',
             done:false,
         },{
-            name:'go to clg',
-            done:false,
-        },{
-            name:'go to clg',
-            done:false,
-        }],
-        done:false,
-    },{
-        name:'Buy Pink Book',
-        subtasks: [{
-            name:'go to clg',
-            done:false,
-        },{
-            name:'go to clg',
-            done:false,
-        },{
-            name:'go to clg',
-            done:false,
-        }],
-        done:false,
-    }],
-    done:false
-},{
-    name : 'EVS OBA completion',
-    milestone:[{
-        name:'Buy Pink Book',
-        subtasks: [{
-            name:'go to clg',
-            done:false,
-        },{
-            name:'go to clg',
-            done:false,
-        },{
-            name:'go to clg',
-            done:false,
-        }],
-        done:false,
-    }],
-    done:false
-},{
-    name : 'EVS OBA completion',
-    milestone:[{
-        name:'Buy Pink Book',
-        subtasks: [{
-            name:'go to clg',
-            done:false,
-        },{
-            name:'go to clg',
-            done:false,
-        },{
-            name:'go to clg',
+            name:'gather youtube study material',
             done:false,
         }],
         done:false,
@@ -92,10 +42,54 @@ function Tasks() {
             name:'go to clg',
             done:false,
         },{
+            name:'Get money',
+            done:false,
+        }],
+        done:false,
+    }],
+    done:false
+},{
+    name : 'EVS OBA completion',
+    milestone:[{
+        name:'Buy Pink Book',
+        subtasks: [{
             name:'go to clg',
             done:false,
         },{
-            name:'go to clg',
+            name:'go to stationary',
+            done:false,
+        },{
+            name:'buy a 12rs pink book',
+            done:false,
+        }],
+        done:false,
+    }],
+    done:false
+},{
+    name : 'Mathematics Linear Algebra',
+    milestone:[{
+        name:'Gather study resources',
+        subtasks: [{
+            name:'Ask friends about pdf',
+            done:false,
+        },{
+            name:'Sort important notes from RD Sharma book',
+            done:false,
+        },{
+            name:'Browse on web',
+            done:false,
+        }],
+        done:false,
+    },{
+        name:'Make short notes',
+        subtasks: [{
+            name:'Solve Important problems on sticky note',
+            done:false,
+        },{
+            name:'Mark Important Exercise numbers',
+            done:false,
+        },{
+            name:'Revise',
             done:false,
         }],
         done:false,

@@ -1,40 +1,15 @@
-// Home.tsx
-import React, { useEffect, useState } from "react";
-import Box from "../components/DashboardBox/Box";
-import { ChartNoAxesCombined, FolderPlus, Plus, FilePlus2, Flag, MoveRight } from "lucide-react";
+import { useState } from "react";
+import { Flag } from "lucide-react";
 import CreateCourse from "@/components/DashboardBox/CreateCourse";
 import CreateTask from "@/components/DashboardBox/CreateTask";
 import ViewTask from "@/components/DashboardBox/ViewTask";
 import Progress from "@/components/DashboardBox/Progress";
 
-interface HomeItem {
-  icon: React.ReactNode;
-  url: string;
-  title: string;
-}
-
-const homeItems: HomeItem[] = [
-  {
-    icon: <Plus />,
-    url: "/tasks",
-    title: "Create Tasks",
-  },
-  {
-    icon: <FilePlus2 />,
-    url: "/tasks",
-    title: "Create Course",
-  },
-  {
-    icon: <FolderPlus />,
-    url: "/tasks",
-    title: "View Tasks",
-  },
-  {
-    icon: <ChartNoAxesCombined />,
-    url: "/analytics",
-    title: "Your Progress",
-  },
-];
+// interface HomeItem {
+//   icon: React.ReactNode;
+//   url: string;
+//   title: string;
+// }
 
 const initialCourseTypes = ["EVS", "MCES", "FAFL", "RMIPR"];
 const priorities = [
@@ -70,13 +45,11 @@ function Home() {
         <Progress/>
       </div>
 
-      {/* Task Modal */}
       {taskModalOpen && (
         <>
           <div onClick={()=>setTaskModalOpen(false)} className="h-[100vh] w-[100vw] absolute bg-black/50 top-0 left-0 flex items-center z-[10]">
 
             <div className="relative bg-[var(--background-2)] h-[40vh] w-[65vw] mx-auto rounded-md translate-y-[-10%] z-[20] px-8 py-6" onClick={(e) => e.stopPropagation()}>
-              {/* Task Title Input */}
               <div className="min-h-[20vh] mb-4 flex  justify-between ">
                 <input
                   type="text"
@@ -92,9 +65,7 @@ function Home() {
                 </div>
               </div>
 
-              {/* Task Options */}
               <div className="flex gap-3 items-center mb-4">
-                {/* Task Type Dropdown */}
                 <select
                   name="taskType"
                   id="taskType"
@@ -108,7 +79,6 @@ function Home() {
                   <option value="Other">Other</option>
                 </select>
 
-                {/* Course Types Dropdown */}
                 <select
                   className="bg-[var(--background-2)] border border-[var(--secondary)] py-2 outline-none rounded-md px-2 w-[9vw] text-white"
                 >
@@ -120,7 +90,6 @@ function Home() {
                   ))}
                 </select>
 
-                {/* Deadline Input */}
                 <div className="relative">
                   <input
                     type="date"
@@ -129,7 +98,6 @@ function Home() {
                   />
                 </div>
 
-                {/* Reminder Option */}
                 <div className={`${remidersSelected ? 'bg-[var(--secondary)]' : 'bg-white'} w-[11vw] 
                 rounded-md flex justify-center items-center text-black py-2 px-1`}>
                   <input type="checkbox"
@@ -139,7 +107,6 @@ function Home() {
                   Set Reminders
                 </div>
 
-                {/* Priority Dropdown */}
                 <div className="relative w-[9vw]">
                   <div
                     className="bg-[var(--background-2)] border border-[var(--secondary)] py-2 px-2 rounded-md text-white cursor-pointer flex justify-between items-center"
@@ -173,27 +140,23 @@ function Home() {
                 </div>
 
 
-                {/* Estd time */}
 
                 <input type="text" className="py-2 rounded-md w-[8vw] text-black px-1" placeholder="Est. Time(hrs) " />
 
 
               </div>
 
-              {/* Submit Button */}
 
             </div>
           </div>
         </>
       )}
 
-      {/* Course Modal */}
       {courseModalOpen && (
         <>
           <div onClick={()=>setcourseModalOpen(false)} className="h-[100vh] w-[100vw] absolute bg-black/50 top-0 left-0 flex items-center z-[10]">
 
             <div className="relative bg-[var(--background-2)] h-[40vh] w-[65vw] mx-auto rounded-md translate-y-[-10%] z-[20] px-8 py-6" onClick={(e) => e.stopPropagation()}>
-              {/* Task Title Input */}
               <div className="min-h-[20vh] mb-4 flex  justify-between ">
                 <div className="bg">
                 <input
@@ -213,9 +176,7 @@ function Home() {
                
               </div>
 
-              {/* Task Options */}
               <div className="flex gap-3 items-center mb-4">
-                {/* Task Type Dropdown */}
                 <select
     
                   className="bg-[var(--background-2)] border border-[var(--secondary)] py-2 outline-none rounded-md px-2 w-[9vw] text-white"
@@ -244,7 +205,6 @@ function Home() {
         </>
       )}
 
-      {/* Initial State */}
       <div className="flex justify-center w-[90vw] mt-8">
         <div className="flex flex-col">
           <img src="minions.png" alt="" width="100px" className="m-auto" />

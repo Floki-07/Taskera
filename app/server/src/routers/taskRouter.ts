@@ -1,4 +1,4 @@
-import { Router, Request, Response } from 'express';
+import { Router, Response } from 'express';
 import { PriorityCalculator, TaskPriorityInput, TimeSlot } from '../lib/priorityCalculator';
 import { authMiddleware } from '../middlewares/authMiddleware';
 import { getPrisma } from '../utils/getPrisma';
@@ -16,7 +16,6 @@ interface CreateTaskRequest {
 
 const router = Router();
 
-// Calculate priority score
 router.post('/calculate-priority', authMiddleware, async (req: any, res: Response) => {
  try {
    const taskInput = req.body as TaskPriorityInput;
@@ -28,13 +27,11 @@ router.post('/calculate-priority', authMiddleware, async (req: any, res: Respons
  }
 });
 
-// Create and schedule task
 router.post('/schedule', authMiddleware, async (req: any, res: any) => {
  const prisma = getPrisma();
  const taskInput: CreateTaskRequest = req.body;
  
  try {
-   // Get user's availability
    const availability = await prisma.userAvailability.findMany({
      where: { userId: req.user!.uuid }
    });
@@ -45,7 +42,6 @@ router.post('/schedule', authMiddleware, async (req: any, res: any) => {
      duration: (slot.endTime.getTime() - slot.startTime.getTime()) / (1000 * 60 * 60)
    }));
 
-   // Get existing tasks
    const existingTasks = await prisma.task.findMany({
      where: { 
        userId: req.user!.uuid,
@@ -53,7 +49,6 @@ router.post('/schedule', authMiddleware, async (req: any, res: any) => {
      }
    });
 
-   // Convert to TaskPriorityInput format
    const existingTaskInputs: TaskPriorityInput[] = existingTasks.map(task => ({
      title: task.name,
      type: task.type as any,
@@ -64,7 +59,6 @@ router.post('/schedule', authMiddleware, async (req: any, res: any) => {
      estTime: task.estTime
    }));
 
-   // Find optimal slot
    const optimalSlot = PriorityCalculator.findOptimalSlot(
      {
        ...taskInput,
@@ -78,7 +72,6 @@ router.post('/schedule', authMiddleware, async (req: any, res: any) => {
      return res.status(400).json({ error: "No suitable time slot available" });
    }
 
-   // Create task
    const newTask = await prisma.task.create({
      data: {
        userId: req.user!.uuid,
@@ -94,7 +87,6 @@ router.post('/schedule', authMiddleware, async (req: any, res: any) => {
      }
    });
 
-   // Create calendar event
    const event = await prisma.calendarEvent.create({
      data: {
        userId: req.user!.uuid,
@@ -117,7 +109,6 @@ router.post('/schedule', authMiddleware, async (req: any, res: any) => {
  }
 });
 
-// Get user's tasks
 router.get('/', authMiddleware, async (req: any, res: Response) => {
  try {
    const prisma = getPrisma();
@@ -146,7 +137,6 @@ router.get('/', authMiddleware, async (req: any, res: Response) => {
  }
 });
 
-// Update task status
 router.patch('/:taskId/status', authMiddleware, async (req: any, res: Response) => {
  const { taskId } = req.params;
  const { status } = req.body;
@@ -169,7 +159,6 @@ router.patch('/:taskId/status', authMiddleware, async (req: any, res: Response) 
  }
 });
 
-//Time Availablity Endpoints
 router.post('/availability', authMiddleware, async (req: any, res: Response) => {
     try {
       const prisma = getPrisma();
@@ -208,7 +197,6 @@ router.put('/availability/:day', authMiddleware, async (req: any, res: any) => {
       const { startTime, endTime } = req.body;
       const { day } = req.params;
   
-      // First find the availability record
       const existingAvailability = await prisma.userAvailability.findFirst({
         where: {
           userId: req.user!.uuid,
@@ -220,7 +208,6 @@ router.put('/availability/:day', authMiddleware, async (req: any, res: any) => {
         return res.status(404).json({ error: 'Availability not found' });
       }
   
-      // Then update using the id
       const availability = await prisma.userAvailability.update({
         where: {
           id: existingAvailability.id
@@ -237,7 +224,6 @@ router.put('/availability/:day', authMiddleware, async (req: any, res: any) => {
     }
 });
 
-// Additional Task Management Endpoints
 router.get('/tasks/:id', authMiddleware, async (req: any, res: any) => {
     try {
       const prisma = getPrisma();

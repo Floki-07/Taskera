@@ -17,17 +17,15 @@ import {
 } from "recharts";
 
 function Analytics() {
-  // Dummy data for statistics
   const studyStats = {
-    totalStudyTime: 1500, // 25 hours in minutes
+    totalStudyTime: 1500, 
     sessionsCompleted: 15,
     tasksTotal: 25,
     tasksCompleted: 12,
-    focusTime: 1200, // 20 hours in minutes
+    focusTime: 1200, 
     averageSessionLength: 45,
   };
 
-  // Dummy data for daily study time
   const dailyStudyData = [
     { date: "Mon", studyTime: 3 },
     { date: "Tue", studyTime: 4.5 },
@@ -38,7 +36,6 @@ function Analytics() {
     { date: "Sun", studyTime: 4 },
   ];
 
-  // Dummy data for task distribution
   const taskDistribution = [
     { type: "Homework", count: 10, completed: 6 },
     { type: "Reading", count: 8, completed: 4 },
@@ -46,7 +43,6 @@ function Analytics() {
     { type: "Practice", count: 3, completed: 1 },
   ];
 
-  // Colors for pie chart
   const COLORS = ['#8884d8', '#82ca9d'];
 
   return (

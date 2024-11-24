@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
 import EditHrsModal from '../components/modal/EditHrsModal';
 import { MoveRight } from 'lucide-react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Dates() {
     const [dateData, setDateData] = useState([

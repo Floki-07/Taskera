@@ -21,7 +21,7 @@ function Milestone({
         <button className="w-2 h-2 bg-[--primary] rounded-full" onClick={()=>{setIsOpen(!isOpen)}}></button>
         <p className="text-xl">
           <span className="font-semibold text-[--secondary]">Milestone 1 </span>
-          : Buy pink Book{" "}
+          : {ms.name}{" "}
         </p>
       </div>
 

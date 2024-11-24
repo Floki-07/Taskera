@@ -1,50 +1,74 @@
-# React + TypeScript + Vite
+# Taskera Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the frontend repository of Taskera, a task management application designed to streamline your productivity.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Intuitive UI for managing tasks
+- Real-time updates for seamless experience
+- Lightweight and responsive design
+- Task categorization and prioritization
+- Deadline management and reminders
+- Collaborative task sharing
+- Progress tracking and analytics
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Follow these steps to set up the development environment:
 
-- Configure the top-level `parserOptions` property like this:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/AaryanNarayani/Taskera
+   ```
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+2. Navigate to the project directory:
+   ```bash
+   cd Taskera
+   ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Folder Structure
+
+- `src/` - Contains the source code
+  - `components/` - Reusable React components
+  - `pages/` - Page-specific components
+  - `utils/` - Helper functions and utilities
+  - `assets/` - Images and other static assets
+
+## Technologies Used
+
+- React - Frontend library
+- Vite - Fast build tool
+- CSS/SCSS - Styling
+- Axios - API calls
+
+## Available Scripts
+
+- `npm run dev` - Starts development server
+- `npm run build` - Creates production build
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+
+
+## Contribution
+
+If you'd like to contribute to Taskera Client:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bugfix.
+3. Submit a pull request with a clear description of your changes.
+
+### Contribution Guidelines
+
+- Follow the existing code style
+- Write clear commit messages
+
