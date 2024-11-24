@@ -1,12 +1,9 @@
-// src/routes/calendarAndCourseRouter.ts
-
 import { Router, Response } from 'express';
 import { authMiddleware } from '../middlewares/authMiddleware';
 import { getPrisma } from '../utils/getPrisma';
 
 const router = Router();
 
-// Calendar Events
 router.post('/events', authMiddleware, async (req: any, res: Response) => {
  try {
    const prisma = getPrisma();
@@ -83,7 +80,6 @@ router.delete('/events/:id', authMiddleware, async (req: any, res: Response) => 
  }
 });
 
-// Course Management
 router.post('/courses', authMiddleware, async (req: any, res: Response) => {
  try {
    const prisma = getPrisma();

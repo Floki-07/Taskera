@@ -10,13 +10,12 @@ import {
 import '@schedule-x/theme-default/dist/index.css'
 import { createEventsServicePlugin } from '@schedule-x/events-service'
 import { createDragAndDropPlugin } from '@schedule-x/drag-and-drop'
-import { format } from 'date-fns' // Import date-fns
+import { format } from 'date-fns' 
 
-// Define the type for an event
 interface CalendarEvent {
   id: string
   title: string
-  start: string // ISO string for start time
+  start: string // ISO string for start 
   end: string // ISO string for end time
 }
 
@@ -48,14 +47,12 @@ function CalendarApp() {
   const handleEventDrop = (droppedEvent: { event: any; start: Date; end: Date }) => {
     const { event, start, end } = droppedEvent;
 
-    // Create a new event object with updated start and end times
     const updatedEvent = {
       ...event,
       start: start.toISOString(),
       end: end.toISOString(),
     };
 
-    // Update the events state efficiently
     setEvents((prevEvents) =>
       prevEvents.map((e) => (e.id === updatedEvent.id ? updatedEvent : e))
     );
@@ -66,7 +63,7 @@ function CalendarApp() {
     createDragAndDropPlugin({
       onDrop: handleEventDrop,
       passive: false,
-    } as any), // Temporary cast to any
+    } as any), 
   ]
 
   const calendar = useCalendarApp({

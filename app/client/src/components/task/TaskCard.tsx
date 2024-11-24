@@ -78,7 +78,7 @@ useEffect(()=>{
           }}
         >
           <h1 className={`${isCompleted && "line-through"} text-4xl`}>
-            EVS OBA completion
+            {item.name}
           </h1>
           {isOpen ? <ChevronUp /> : <ChevronDown />}
         </div>
