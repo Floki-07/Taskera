@@ -28,11 +28,11 @@ function Home() {
 
 
   const handleCourseSubmit=() => { 
-      //aaryan's logic 
+  
       setcourseModalOpen(false)
    }
   const handleTaskSubmit=() => { 
-      //aaryan's logic 
+     
       setTaskModalOpen(false)
    }
   return (
